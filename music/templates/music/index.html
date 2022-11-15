@@ -8,7 +8,7 @@
 	<!--
 	<ul>
 		{% for album in all_albums %}
-		<li><a href="{% url 'music:detail' album.id %}">{{ album.album_title }}</a></li>
+		{% comment %} <li><a href="{% url 'music:detail' album.id %}">{{ album.album_title }}</a></li> {% endcomment %}
 		{% endfor %}
 	</ul>
 	-->

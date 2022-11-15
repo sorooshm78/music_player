@@ -4,7 +4,7 @@
 	<title>Star Tunes | Star Wars Music Player</title>
 	
 	<!--loads the path to static files such as stylesheets and/or scripts-->
-	{% load staticfiles %}
+	{% load static %}
 
 	<!-- Materialize CSS -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.2/css/materialize.min.css">
@@ -33,6 +33,7 @@
 	        </div>
 	      </form>
 	      <ul class="sidenav" id="mobile-demo">
+	        <li><a href="#" id="layOut"><i class="material-icons">album</i>Albums</a></li>
 	        <li><a href="{% url 'music:index' %}" id="layOut"><i class="material-icons">album</i>Albums</a></li>
 	        <li><a href="#" id="layOut"><i class="material-icons">music_note</i>Songs</a></li>
 	        <li><a href="#" id="layOut"><i class="material-icons">add</i>Add Album</a></li>
