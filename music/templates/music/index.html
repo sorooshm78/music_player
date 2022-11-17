@@ -13,7 +13,8 @@
             {% for album in albums %}
                 <div class="col-sm-4 col-lg-2">
                     <div class="thumbnail">
-                        <a href="{% url 'music:detail' album.id %}">
+                        {% comment %} <a href="{% url 'music:detail' album.id %}"> {% endcomment %}
+                        <a href="#">
                             <img src="{{ album.album_logo.url }}" class="img-responsive">
                         </a>
                         <div class="caption">
@@ -21,7 +22,8 @@
                             <h4>{{ album.artist }}</h4>
 
                             <!-- View Details -->
-                            <a href="{% url 'music:detail' album.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
+                            {% comment %} <a href="{% url 'music:detail' album.id %}" class="btn btn-primary btn-sm" role="button">View Details</a> {% endcomment %}
+                            <a href="#" class="btn btn-primary btn-sm" role="button">View Details</a>
 
                             <!-- Delete Album -->
                             {% comment %} <form action="{% url 'music:delete_album' album.id %}" method="post" style="display: inline;"> {% endcomment %}
