@@ -24,7 +24,8 @@
                             <a href="{% url 'music:detail' album.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
 
                             <!-- Delete Album -->
-                            <form action="{% url 'music:delete_album' album.id %}" method="post" style="display: inline;">
+                            {% comment %} <form action="{% url 'music:delete_album' album.id %}" method="post" style="display: inline;"> {% endcomment %}
+                            <form action="#" method="post" style="display: inline;">
                                 {% csrf_token %}
                                 <input type="hidden" name="album_id" value="{{ album.id }}" />
                                 <button type="submit" class="btn btn-default btn-sm">
@@ -33,7 +34,8 @@
                             </form>
 
                             <!-- Favorite Album -->
-                            <a href="{% url 'music:favorite_album' album.id %}" class="btn btn-default btn-sm btn-favorite" role="button">
+                            {% comment %} <a href="{% url 'music:favorite_album' album.id %}" class="btn btn-default btn-sm btn-favorite" role="button"> {% endcomment %}
+                            <a href="#" class="btn btn-default btn-sm btn-favorite" role="button">
                                 <span class="glyphicon glyphicon-star {% if album.is_favorite %}active{% endif %}"></span>
                             </a>
 
@@ -45,7 +47,8 @@
         {% else %}
             <div class="col-sm-12">
                 <br>
-                <a href="{% url 'music:create_album' %}">
+                {% comment %} <a href="{% url 'music:create_album' %}"> {% endcomment %}
+                <a href="#">
                     <button type="button" class="btn btn-success">
                         <span class="glyphicon glyphicon-plus"></span>&nbsp; Add an Album
                     </button>
@@ -79,20 +82,24 @@
                                         <td>{{ song.song_title }}</td>
                                         <td>{{ song.album.artist }}</td>
                                         <td>
-                                            <a target="_blank" href="{{ song.audio_file.url }}">
+                                            {% comment %} <a target="_blank" href="{{ song.audio_file.url }}"> {% endcomment %}
+                                            <a target="_blank" href="#">
                                                 <button type="button" class="btn btn-success btn-xs">
                                                     <span class="glyphicon glyphicon-play"></span>&nbsp; Play
                                                 </button>
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="{% url 'music:detail' song.album.id %}">
+                                            {% comment %} <a href="{% url 'music:detail' song.album.id %}"> {% endcomment %}
+                                            <a href="#">
                                                 <img src="{{ song.album.album_logo.url }}" class="img-responsive" style="width: 20px; float: left; margin-right: 10px;" />
                                             </a>
-                                            <a href="{% url 'music:detail' song.album.id %}">{{ song.album.album_title }}</a>
+                                            {% comment %} <a href="{% url 'music:detail' song.album.id %}">{{ song.album.album_title }}</a> {% endcomment %}
+                                            <a href="#">{{ song.album.album_title }}</a>
                                         </td>
                                         <td>
-                                            <a href="{% url 'music:favorite' song.id %}" class="btn-favorite"><span class="glyphicon glyphicon-star {% if song.is_favorite %}active{% endif %}"></span></a>
+                                            {% comment %} <a href="{% url 'music:favorite' song.id %}" class="btn-favorite"><span class="glyphicon glyphicon-star {% if song.is_favorite %}active{% endif %}"></span></a> {% endcomment %}
+                                            <a href="#" class="btn-favorite"><span class="glyphicon glyphicon-star {% if song.is_favorite %}active{% endif %}"></span></a>
                                         </td>
                                     </tr>
                                 {% endfor %}
