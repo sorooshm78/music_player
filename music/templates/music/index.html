@@ -13,8 +13,7 @@
             {% for album in albums %}
                 <div class="col-sm-4 col-lg-2">
                     <div class="thumbnail">
-                        {% comment %} <a href="{% url 'music:detail' album.id %}"> {% endcomment %}
-                        <a href="#">
+                        <a href="{% url 'music:detail' album.id %}">
                             <img src="{{ album.album_logo.url }}" class="img-responsive">
                         </a>
                         <div class="caption">
@@ -22,12 +21,10 @@
                             <h4>{{ album.artist }}</h4>
 
                             <!-- View Details -->
-                            {% comment %} <a href="{% url 'music:detail' album.id %}" class="btn btn-primary btn-sm" role="button">View Details</a> {% endcomment %}
-                            <a href="#" class="btn btn-primary btn-sm" role="button">View Details</a>
+                            <a href="{% url 'music:detail' album.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
 
                             <!-- Delete Album -->
-                            {% comment %} <form action="{% url 'music:delete_album' album.id %}" method="post" style="display: inline;"> {% endcomment %}
-                            <form action="#" method="post" style="display: inline;">
+                            <form action="{% url 'music:delete_album' album.id %}" method="post" style="display: inline;">
                                 {% csrf_token %}
                                 <input type="hidden" name="album_id" value="{{ album.id }}" />
                                 <button type="submit" class="btn btn-default btn-sm">
@@ -49,8 +46,7 @@
         {% else %}
             <div class="col-sm-12">
                 <br>
-                {% comment %} <a href="{% url 'music:create_album' %}"> {% endcomment %}
-                <a href="#">
+                <a href="{% url 'music:create_album' %}">
                     <button type="button" class="btn btn-success">
                         <span class="glyphicon glyphicon-plus"></span>&nbsp; Add an Album
                     </button>
@@ -92,12 +88,10 @@
                                             </a>
                                         </td>
                                         <td>
-                                            {% comment %} <a href="{% url 'music:detail' song.album.id %}"> {% endcomment %}
-                                            <a href="#">
+                                            <a href="{% url 'music:detail' song.album.id %}">
                                                 <img src="{{ song.album.album_logo.url }}" class="img-responsive" style="width: 20px; float: left; margin-right: 10px;" />
                                             </a>
-                                            {% comment %} <a href="{% url 'music:detail' song.album.id %}">{{ song.album.album_title }}</a> {% endcomment %}
-                                            <a href="#">{{ song.album.album_title }}</a>
+                                            <a href="{% url 'music:detail' song.album.id %}">{{ song.album.album_title }}</a>
                                         </td>
                                         <td>
                                             {% comment %} <a href="{% url 'music:favorite' song.id %}" class="btn-favorite"><span class="glyphicon glyphicon-star {% if song.is_favorite %}active{% endif %}"></span></a> {% endcomment %}
