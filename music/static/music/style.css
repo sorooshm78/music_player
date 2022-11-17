@@ -1,37 +1,41 @@
-#layOut {
-	background-color: #212121;
-	color: #ffd700;
-}
-
 body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-  }
+    
+    background: url("images/background.jpg");
+    
+    height: 100%; 
 
-main {
-    flex: 1 0 auto;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-.mobileSearch {
-	margin: 0 0 0 50px !important;
-	width: 60% !important;
+html {
+    height: 100%;
 }
 
-.material-icons {
-	color: #ffd700 !important;
+ul.errorlist {
+    padding-left: 0;
 }
 
-#fontAwIcon {
-	vertical-align: middle;
-	line-height: 56px !important;
+ul.errorlist > li {
+    list-style: none;
 }
 
-.activePage {
-	color: #212121;
-	background-color: #ffd700;
+.navbar {
+    border-radius: 0;
 }
 
-.brand-logo {
-	font-family: Bungee;
+.navbar-brand {
+    font-family: 'Satisfy', cursive;
+}
+
+.glyphicon-star {
+    color: #CCCCCC;
+    font-size: 16px;
+}
+
+.glyphicon-star.active {
+    color: #FDB230;
 }
