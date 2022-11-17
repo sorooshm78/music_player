@@ -8,9 +8,9 @@ app_name = "music"
 
 urlpatterns = [
     path("", views.ListAlbum.as_view(), name="index"),
-    path("detail/<pk>/", views.DetailAlbum.as_view(), name="detail"),
-    path("delete/album/<pk>/", views.DeleteAlbum.as_view(), name="delete_album"),
-    path("create/album/", views.CreateAlbum.as_view(), name="create_album"),
+    path("album/detail/<pk>/", views.DetailAlbum.as_view(), name="detail"),
+    path("album/delete/<pk>/", views.DeleteAlbum.as_view(), name="delete_album"),
+    path("album/create/", views.CreateAlbum.as_view(), name="create_album"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
