@@ -7,10 +7,11 @@ from . import views
 app_name = "music"
 
 urlpatterns = [
-    path("", views.ListAlbum.as_view(), name="index"),
-    path("album/detail/<pk>/", views.DetailAlbum.as_view(), name="detail"),
-    path("album/delete/<pk>/", views.DeleteAlbum.as_view(), name="delete_album"),
-    path("album/create/", views.CreateAlbum.as_view(), name="create_album"),
+    path("", views.AlbumList.as_view(), name="index"),
+    path("album/detail/<pk>/", views.AlbumDetail.as_view(), name="detail"),
+    path("album/delete/<pk>/", views.AlbumDelete.as_view(), name="delete_album"),
+    path("album/create/", views.AlbumCreate.as_view(), name="create_album"),
+    path("album/favorite/<pk>/", views.AlbumFavorite.as_view(), name="favorite_album"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
