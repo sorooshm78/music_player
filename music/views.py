@@ -6,7 +6,7 @@ from django.http import JsonResponse
 
 
 from .models import Album, Song
-from .forms import AlbumModelForm
+from .forms import AlbumModelForm, SongModelForm
 
 # Create your views here.
 class AlbumList(generic.ListView):
@@ -43,7 +43,23 @@ class AlbumFavorite(View):
         return JsonResponse({"success": True})
 
 
-# class SongList(generic.ListView):
-#     model = Song
-#     context_object_name = "songs"
-#     template_name = "music/detail.html"
+class SongList(generic.ListView):
+    model = Song
+    context_object_name = "songs"
+    template_name = "music/songs.html"
+
+
+# class SongCreate(generic.CreateView):
+#     form_class = SongModelForm
+#     template_name = "music/create_song.html"
+
+#     def get_success_url(self):
+#         return reverse("music:index")
+
+
+# class SongFavorite(View):
+#     def get(self, request, pk):
+#         song = get_object_or_404(Song, pk=pk)
+#         song.is_favorite = not song.is_favorite
+#         song.save()
+#         return JsonResponse({"success": True})
