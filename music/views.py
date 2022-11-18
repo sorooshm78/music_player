@@ -49,17 +49,46 @@ class SongList(generic.ListView):
     template_name = "music/songs.html"
 
 
-# class SongCreate(generic.CreateView):
-#     form_class = SongModelForm
-#     template_name = "music/create_song.html"
+class SongCreate(generic.CreateView):
+    form_class = SongModelForm
+    template_name = "music/create_song.html"
 
-#     def get_success_url(self):
-#         return reverse("music:index")
+    def initial_album(self):
+        self.album_id = self.kwargs.get("album_id")
+        self.album = get_object_or_404(Album, pk=self.album_id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        self.initial_album()
+
+        context["album"] = self.album
+        return context
+
+    def form_valid(self, form):
+        self.initial_album()
+        form.instance.album = self.album
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse("music:detail", args=[self.album_id])
 
 
-# class SongFavorite(View):
-#     def get(self, request, pk):
-#         song = get_object_or_404(Song, pk=pk)
-#         song.is_favorite = not song.is_favorite
-#         song.save()
-#         return JsonResponse({"success": True})
+class SongFavorite(View):
+    def get(self, request, pk):
+        song = get_object_or_404(Song, pk=pk)
+        song.is_favorite = not song.is_favorite
+        song.save()
+        return JsonResponse({"success": True})
+
+
+class SongDelete(generic.DeleteView):
+    model = Song
+
+    def get_object(self):
+        self.album_id = self.kwargs.get("album_id")
+        self.song_id = self.kwargs.get("song_id")
+
+        return get_object_or_404(self.model, id=self.song_id, album_id=self.album_id)
+
+    def get_success_url(self):
+        return reverse("music:detail", args=self.album_id)

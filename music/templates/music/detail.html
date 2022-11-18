@@ -62,12 +62,10 @@
                                     </a>
                                 </td>
                                 <td>
-                                    {% comment %} <a href="{% url 'music:favorite' song.id %}" class="btn-favorite"><span class="glyphicon glyphicon-star {% if song.is_favorite %}active{% endif %}"></span></a> {% endcomment %}
-                                    <a href="#" class="btn-favorite"><span class="glyphicon glyphicon-star {% if song.is_favorite %}active{% endif %}"></span></a>
+                                    <a href="{% url 'music:favorite' song.id %}" class="btn-favorite"><span class="glyphicon glyphicon-star {% if song.is_favorite %}active{% endif %}"></span></a>
                                 </td>
                                 <td>
-                                    {% comment %} <form action="{% url 'music:delete_song' album.id song.id %}" method="post" style="display: inline;"> {% endcomment %}
-                                    <form action="#" method="post" style="display: inline;">
+                                    <form action="{% url 'music:delete_song' album.id song.id %}" method="post" style="display: inline;">
                                         {% csrf_token %}
                                         <input type="hidden" name="song_id" value="{{ song.id }}" />
                                         <button type="submit" class="btn btn-danger btn-xs">
