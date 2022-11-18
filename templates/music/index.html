@@ -13,7 +13,7 @@
             {% for album in albums %}
                 <div class="col-sm-4 col-lg-2">
                     <div class="thumbnail">
-                        <a href="{% url 'music:detail' album.id %}">
+                        <a href="{% url 'detail' album.id %}">
                             <img src="{{ album.album_logo.url }}" class="img-responsive">
                         </a>
                         <div class="caption">
@@ -21,10 +21,10 @@
                             <h4>{{ album.artist }}</h4>
 
                             <!-- View Details -->
-                            <a href="{% url 'music:detail' album.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
+                            <a href="{% url 'detail' album.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
 
                             <!-- Delete Album -->
-                            <form action="{% url 'music:delete_album' album.id %}" method="post" style="display: inline;">
+                            <form action="{% url 'delete_album' album.id %}" method="post" style="display: inline;">
                                 {% csrf_token %}
                                 <input type="hidden" name="album_id" value="{{ album.id }}" />
                                 <button type="submit" class="btn btn-default btn-sm">
@@ -33,7 +33,7 @@
                             </form>
 
                             <!-- Favorite Album -->
-                            <a href="{% url 'music:favorite_album' album.id %}" class="btn btn-default btn-sm btn-favorite" role="button">
+                            <a href="{% url 'favorite_album' album.id %}" class="btn btn-default btn-sm btn-favorite" role="button">
                                 <span class="glyphicon glyphicon-star {% if album.is_favorite %}active{% endif %}"></span>
                             </a>
 
@@ -45,7 +45,7 @@
         {% else %}
             <div class="col-sm-12">
                 <br>
-                <a href="{% url 'music:create_album' %}">
+                <a href="{% url 'create_album' %}">
                     <button type="button" class="btn btn-success">
                         <span class="glyphicon glyphicon-plus"></span>&nbsp; Add an Album
                     </button>
@@ -87,13 +87,13 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="{% url 'music:detail' song.album.id %}">
+                                            <a href="{% url 'detail' song.album.id %}">
                                                 <img src="{{ song.album.album_logo.url }}" class="img-responsive" style="width: 20px; float: left; margin-right: 10px;" />
                                             </a>
-                                            <a href="{% url 'music:detail' song.album.id %}">{{ song.album.album_title }}</a>
+                                            <a href="{% url 'detail' song.album.id %}">{{ song.album.album_title }}</a>
                                         </td>
                                         <td>
-                                            {% comment %} <a href="{% url 'music:favorite' song.id %}" class="btn-favorite"><span class="glyphicon glyphicon-star {% if song.is_favorite %}active{% endif %}"></span></a> {% endcomment %}
+                                            {% comment %} <a href="{% url 'favorite' song.id %}" class="btn-favorite"><span class="glyphicon glyphicon-star {% if song.is_favorite %}active{% endif %}"></span></a> {% endcomment %}
                                             <a href="#" class="btn-favorite"><span class="glyphicon glyphicon-star {% if song.is_favorite %}active{% endif %}"></span></a>
                                         </td>
                                     </tr>

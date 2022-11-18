@@ -1,17 +1,12 @@
 from django.urls import path
-from django.conf.urls.static import static
-from django.conf import settings
 
 from . import views
 
-app_name = "music"
 
 urlpatterns = [
     path("", views.AlbumList.as_view(), name="index"),
-    path("album/detail/<pk>/", views.AlbumDetail.as_view(), name="detail"),
-    path("album/delete/<pk>/", views.AlbumDelete.as_view(), name="delete_album"),
-    path("album/create/", views.AlbumCreate.as_view(), name="create_album"),
-    path("album/favorite/<pk>/", views.AlbumFavorite.as_view(), name="favorite_album"),
+    path("detail/<pk>/", views.AlbumDetail.as_view(), name="detail"),
+    path("delete/<pk>/", views.AlbumDelete.as_view(), name="delete_album"),
+    path("create/", views.AlbumCreate.as_view(), name="create_album"),
+    path("favorite/<pk>/", views.AlbumFavorite.as_view(), name="favorite_album"),
 ]
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

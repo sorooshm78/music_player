@@ -8,6 +8,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Song
 from .forms import SongModelForm
 
+from album.models import Album
+
 
 class UserSongFilterMixin:
     def get_queryset(self):
@@ -43,7 +45,7 @@ class SongCreate(LoginRequiredMixin, UserSongFilterMixin, generic.CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("music:detail", args=[self.album_id])
+        return reverse("detail", args=[self.album_id])
 
 
 class SongFavorite(LoginRequiredMixin, View):
@@ -66,4 +68,4 @@ class SongDelete(LoginRequiredMixin, UserSongFilterMixin, generic.DeleteView):
         )
 
     def get_success_url(self):
-        return reverse("music:detail", args=self.album_id)
+        return reverse("detail", args=self.album_id)

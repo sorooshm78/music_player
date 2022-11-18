@@ -31,7 +31,7 @@ class AlbumDelete(LoginRequiredMixin, UserAlbumFilterMixin, generic.DeleteView):
     model = Album
 
     def get_success_url(self):
-        return reverse("music:index")
+        return reverse("index")
 
 
 class AlbumCreate(LoginRequiredMixin, generic.CreateView):
@@ -43,7 +43,7 @@ class AlbumCreate(LoginRequiredMixin, generic.CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("music:index")
+        return reverse("index")
 
 
 class AlbumFavorite(LoginRequiredMixin, View):

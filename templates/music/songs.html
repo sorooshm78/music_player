@@ -8,8 +8,8 @@
     <div class="row">
         <div class="col-sm-12">
             <ul class="nav nav-pills" style="margin-bottom: 10px;">
-                <li role="presentation" {% if filter_by == 'all' %}class="active"{% endif %}><a href="{% url 'music:songs' 'all' %}">View All</a></li>
-                <li role="presentation" {% if filter_by == 'favorites' %}class="active"{% endif %}><a href="{% url 'music:songs' 'favorites' %}">Favorites</a></li>
+                <li role="presentation" {% if filter_by == 'all' %}class="active"{% endif %}><a href="{% url 'songs' 'all' %}">View All</a></li>
+                <li role="presentation" {% if filter_by == 'favorites' %}class="active"{% endif %}><a href="{% url 'songs' 'favorites' %}">Favorites</a></li>
             </ul>
         </div>
     </div>
@@ -43,13 +43,13 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="{% url 'music:detail' song.album.id %}">
+                                        <a href="{% url 'detail' song.album.id %}">
                                             <img src="{{ song.album.album_logo.url }}" class="img-responsive" style="width: 20px; float: left; margin-right: 10px;" />
                                         </a>
-                                        <a href="{% url 'music:detail' song.album.id %}">{{ song.album.album_title }}</a>
+                                        <a href="{% url 'detail' song.album.id %}">{{ song.album.album_title }}</a>
                                     </td>
                                     <td>
-                                        <a href="{% url 'music:favorite' song.id %}" class="btn-favorite"><span class="glyphicon glyphicon-star {% if song.is_favorite %}active{% endif %}"></span></a>
+                                        <a href="{% url 'favorite' song.id %}" class="btn-favorite"><span class="glyphicon glyphicon-star {% if song.is_favorite %}active{% endif %}"></span></a>
                                     </td>
                                 </tr>
                             {% endfor %}
