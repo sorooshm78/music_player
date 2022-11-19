@@ -52,3 +52,13 @@ class AlbumFavorite(LoginRequiredMixin, View):
         album.is_favorite = not album.is_favorite
         album.save()
         return JsonResponse({"success": True})
+
+
+# class AlbumFavorite(LoginRequiredMixin, UserAlbumFilterMixin, generic.DetailView):
+#     model = Album
+
+#     def get(self, request, pk):
+#         album = self.get_object()
+#         album.is_favorite = not album.is_favorite
+#         album.save()
+#         return JsonResponse({"success": True})
