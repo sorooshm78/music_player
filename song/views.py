@@ -9,6 +9,7 @@ from .models import Song
 from .forms import SongModelForm
 
 from album.models import Album
+from album.views import UserAlbumFilterMixin
 
 
 class UserSongFilterMixin:
@@ -24,13 +25,14 @@ class SongList(LoginRequiredMixin, UserSongFilterMixin, generic.ListView):
     template_name = "music/songs.html"
 
 
-class SongCreate(LoginRequiredMixin, UserSongFilterMixin, generic.CreateView):
+class SongCreate(LoginRequiredMixin, UserAlbumFilterMixin, generic.CreateView):
     form_class = SongModelForm
     template_name = "music/create_song.html"
+    model = Album
 
     def initial_album(self):
         self.album_id = self.kwargs.get("album_id")
-        self.album = get_object_or_404(Album, pk=self.album_id, user=self.request.user)
+        self.album = get_object_or_404(self.get_queryset(), pk=self.album_id)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
