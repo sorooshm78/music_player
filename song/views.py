@@ -7,16 +7,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Song
 from .forms import SongModelForm
+from .mixins import UserSongFilterMixin
 
 from album.models import Album
-from album.views import UserAlbumFilterMixin
-
-
-class UserSongFilterMixin:
-    def get_queryset(self):
-        query = super().get_queryset()
-        user = self.request.user
-        return query.filter(album__user=user)
+from album.mixins import UserAlbumFilterMixin
 
 
 class SongList(LoginRequiredMixin, UserSongFilterMixin, generic.ListView):

@@ -7,13 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Album
 from .forms import AlbumModelForm
-
-
-class UserAlbumFilterMixin:
-    def get_queryset(self):
-        query = super().get_queryset()
-        user = self.request.user
-        return query.filter(user=user)
+from .mixins import UserAlbumFilterMixin
 
 
 class AlbumList(LoginRequiredMixin, UserAlbumFilterMixin, generic.ListView):
