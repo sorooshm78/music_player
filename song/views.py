@@ -64,4 +64,4 @@ class SongDelete(LoginRequiredMixin, UserSongFilterMixin, generic.DeleteView):
         )
 
     def get_success_url(self):
-        return reverse("detail", args=self.album_id)
+        return reverse("detail", args=[self.album_id])
