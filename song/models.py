@@ -1,4 +1,8 @@
+import os
+
 from django.db import models
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 from django.contrib.auth.models import User
 
 from album.models import Album
@@ -14,3 +18,14 @@ class Song(models.Model):
 
     def __str__(self):
         return f"{self.album.album_title} -> {self.song_title}"
+
+
+@receiver(post_delete, sender=Song)
+def auto_delete_file_on_delete(sender, instance, **kwargs):
+    """
+    Deletes file from filesystem
+    when corresponding 'Song' object is deleted.
+    """
+    audio_path = str(instance.audio_file)
+    if os.path.isfile(audio_path):
+        os.remove(audio_path)
