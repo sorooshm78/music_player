@@ -5,7 +5,7 @@ from django.urls import reverse
 from album.models import Album
 
 
-class TestAlbumCreateView(TestCase):
+class TestAlbumDeleteView(TestCase):
     def setUp(self):
         self.client = Client()
         self.user1 = User.objects.create(username="user1", password="a/@1234567")
