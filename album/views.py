@@ -9,11 +9,30 @@ from .models import Album
 from .forms import AlbumModelForm
 from .mixins import UserAlbumFilterMixin
 
+from song.models import Song
+
 
 class AlbumList(LoginRequiredMixin, UserAlbumFilterMixin, generic.ListView):
     template_name = "music/index.html"
     model = Album
     context_object_name = "albums"
+
+    def get_queryset(self):
+        query = super().get_queryset()
+
+        self.search = self.request.GET.get("q", None)
+        if self.search is not None:
+            query = query.filter(album_title__icontains=self.search)
+
+        return query
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        if self.search is not None:
+            context["songs"] = Song.objects.filter(song_title__icontains=self.search)
+
+        return context
 
 
 class AlbumDetail(LoginRequiredMixin, UserAlbumFilterMixin, generic.DetailView):
