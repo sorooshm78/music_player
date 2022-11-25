@@ -18,6 +18,14 @@ class SongList(LoginRequiredMixin, UserSongFilterMixin, generic.ListView):
     context_object_name = "song_list"
     template_name = "music/songs.html"
 
+    def get_queryset(self):
+        query = super().get_queryset()
+        filter_by = self.kwargs.get("filter_by")
+        if filter_by == "favorites":
+            query = query.filter(is_favorite=True)
+
+        return query
+
 
 class SongCreate(LoginRequiredMixin, UserAlbumFilterMixin, generic.CreateView):
     form_class = SongModelForm
