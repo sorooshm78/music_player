@@ -1,85 +1,86 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 from album.models import Album
+from song.models import Song
 
 
-class TestAlbumCreateView(TestCase):
+class TestSongCreateView(TestCase):
     def setUp(self):
+        self.test_file_audio_name = "TestAudioFile.mp3"
+        self.audio_file = SimpleUploadedFile(self.test_file_audio_name, b"test_content")
+
         self.client = Client()
         self.user1 = User.objects.create(username="user1", password="a/@1234567")
         self.user2 = User.objects.create(username="user2", password="a/@1234567")
-        self.url = reverse("create_album")
+        self.album_create_by_user1 = self.create_album(self.user1)
+        self.url = reverse("create_song", args=[self.album_create_by_user1.id])
 
-    def test_create_album_without_authentication(self):
+    def tearDown(self):
+        songs = Song.objects.all()
+        for song in songs:
+            delete_url = reverse(
+                "delete_song", args=[self.album_create_by_user1.id, song.id]
+            )
+            self.client.post(delete_url)
+
+    def test_create_song_without_authentication(self):
         response = self.client.get(self.url)
 
         # Redirect to login page
         self.assertEqual(response.status_code, 302)
 
-    def test_create_album(self):
+    def test_create_song(self):
         self.client.force_login(self.user1)
         data = {
-            "album_title": "test_title",
-            "artist": "test_artist",
-            "genre": "test_genre",
+            "song_title": "test_title",
+            "audio_file": self.audio_file,
         }
         response = self.client.post(self.url, data=data)
         self.assertEqual(response.status_code, 302)
 
-        album_created = Album.objects.get(id=1)
-        self.assertEqual(album_created.album_title, data["album_title"])
-        self.assertEqual(album_created.artist, data["artist"])
-        self.assertEqual(album_created.genre, data["genre"])
+        song_created = Song.objects.get(id=1)
+        self.assertEqual(song_created.song_title, data["song_title"])
+        self.assertEqual(song_created.album, self.album_create_by_user1)
 
-    def test_create_album_with_empty_title(self):
+    def test_create_song_with_empty_title(self):
         self.client.force_login(self.user1)
         data = {
-            "artist": "test_artist",
-            "genre": "test_genre",
+            "audio_file": self.audio_file,
         }
         response = self.client.post(self.url, data=data)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "This field is required")
 
-    def test_create_album_with_empty_artist(self):
+    def test_create_song_with_empty_audio(self):
         self.client.force_login(self.user1)
         data = {
-            "album_title": "test_title",
-            "genre": "test_genre",
+            "song_title": "test_title",
         }
         response = self.client.post(self.url, data=data)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "This field is required")
 
-    def test_create_album_with_empty_genre(self):
-        self.client.force_login(self.user1)
-        data = {
-            "album_title": "test_title",
-            "artist": "test_artist",
-        }
-        response = self.client.post(self.url, data=data)
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "This field is required")
-
-    def test_create_album_and_not_access_another_user(self):
-        # user1
-        self.client.force_login(self.user1)
-        data = {
-            "album_title": "test_title",
-            "artist": "test_artist",
-            "genre": "test_genre",
-        }
-        response = self.client.post(self.url, data=data)
-        self.client.logout()
-        self.assertEqual(response.status_code, 302)
-
-        # user2
-        album_created = Album.objects.get(id=1)
-        url = reverse("detail", args=[album_created.id])
+    def test_not_create_song_by_another_album(self):
+        url = reverse("create_song", args=[self.album_create_by_user1.id])
         self.client.force_login(self.user2)
         response = self.client.get(url)
         self.client.logout()
 
         self.assertEqual(response.status_code, 404)
+
+    def create_album(
+        self,
+        user,
+        album_title="test_title",
+        artist="test_artist",
+        genre="test_genre",
+    ):
+        return Album.objects.create(
+            user=user,
+            album_title=album_title,
+            artist=artist,
+            genre=genre,
+        )
