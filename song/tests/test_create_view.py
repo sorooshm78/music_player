@@ -9,12 +9,10 @@ from song.models import Song
 
 class TestSongCreateView(TestCase):
     def setUp(self):
-        self.test_file_audio_name = "TestAudioFile.mp3"
-        self.audio_file = SimpleUploadedFile(self.test_file_audio_name, b"test_content")
-
         self.client = Client()
         self.user1 = User.objects.create(username="user1", password="a/@1234567")
         self.user2 = User.objects.create(username="user2", password="a/@1234567")
+        self.audio_file = SimpleUploadedFile("TestAudioFile.mp3", b"test_content")
         self.album_create_by_user1 = self.create_album(self.user1)
         self.url = reverse("create_song", args=[self.album_create_by_user1.id])
 
@@ -63,7 +61,7 @@ class TestSongCreateView(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "This field is required")
 
-    def test_not_create_song_by_another_album(self):
+    def test_not_create_song_by_another_user_album(self):
         url = reverse("create_song", args=[self.album_create_by_user1.id])
         self.client.force_login(self.user2)
         response = self.client.get(url)
