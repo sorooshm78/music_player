@@ -23,7 +23,7 @@ class AlbumList(LoginRequiredMixin, UserAlbumFilterMixin, generic.ListView):
 
         self.search = self.request.GET.get("q", None)
 
-        if (self.search is not None) and (self.search is not ""):
+        if (self.search is not None) and (self.search != ""):
             query = query.filter(
                 Q(album_title__icontains=self.search) | Q(artist__icontains=self.search)
             )
@@ -33,7 +33,7 @@ class AlbumList(LoginRequiredMixin, UserAlbumFilterMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        if (self.search is not None) and (self.search is not ""):
+        if (self.search is not None) and (self.search != ""):
             context["songs"] = Song.objects.filter(song_title__icontains=self.search)
 
         return context
