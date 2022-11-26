@@ -4,6 +4,7 @@ from django.views import View
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 
 from .models import Album
 from .forms import AlbumModelForm
@@ -21,15 +22,18 @@ class AlbumList(LoginRequiredMixin, UserAlbumFilterMixin, generic.ListView):
         query = super().get_queryset()
 
         self.search = self.request.GET.get("q", None)
-        if self.search is not None:
-            query = query.filter(album_title__icontains=self.search)
+
+        if (self.search is not None) and (self.search is not ""):
+            query = query.filter(
+                Q(album_title__icontains=self.search) | Q(artist__icontains=self.search)
+            )
 
         return query
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        if self.search is not None:
+        if (self.search is not None) and (self.search is not ""):
             context["songs"] = Song.objects.filter(song_title__icontains=self.search)
 
         return context
