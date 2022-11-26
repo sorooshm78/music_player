@@ -79,8 +79,7 @@
                                         <td>{{ song.song_title }}</td>
                                         <td>{{ song.album.artist }}</td>
                                         <td>
-                                            {% comment %} <a target="_blank" href="{{ song.audio_file.url }}"> {% endcomment %}
-                                            <a target="_blank" href="#">
+                                            <a target="_blank" href="{{ song.audio_file.url }}">
                                                 <button type="button" class="btn btn-success btn-xs">
                                                     <span class="glyphicon glyphicon-play"></span>&nbsp; Play
                                                 </button>
@@ -93,8 +92,7 @@
                                             <a href="{% url 'detail' song.album.id %}">{{ song.album.album_title }}</a>
                                         </td>
                                         <td>
-                                            {% comment %} <a href="{% url 'favorite' song.id %}" class="btn-favorite"><span class="glyphicon glyphicon-star {% if song.is_favorite %}active{% endif %}"></span></a> {% endcomment %}
-                                            <a href="#" class="btn-favorite"><span class="glyphicon glyphicon-star {% if song.is_favorite %}active{% endif %}"></span></a>
+                                            <a href="{% url 'favorite' song.id %}" class="btn-favorite"><span class="glyphicon glyphicon-star {% if song.is_favorite %}active{% endif %}"></span></a>
                                         </td>
                                     </tr>
                                 {% endfor %}
